@@ -4,6 +4,13 @@ from integrations.notifications.base import Notifier
 from integrations.notifications.transport import send_with_retries
 from integrations.notifications.utils import get_first_image
 from models import Item
+import time
+from colorama import init, Fore, Style
+import logging
+
+# Basic console configuration
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 
 class TelegramNotifier(Notifier):
@@ -25,16 +32,24 @@ class TelegramNotifier(Notifier):
 
     def notify_message(self, message: str):
         def _send():
-            return requests.post(
-                f"https://api.telegram.org/bot{self.bot_token}/sendMessage",
-                json={
-                    "chat_id": self.chat_id,
-                    "text": message,
-                    "parse_mode": "MarkdownV2",
-                },
-                proxies=self.proxy,
-                timeout=10,
-            )
+            logger.info(f"{Fore.YELLOW}notify MSG:{message}{Style.RESET_ALL}")
+            url = f"https://platform-api.max.ru/messages?user_id={self.user_id}" # 
+            headers = {'Authorization': self.bot_token, 'Content-Type': 'application/json'}
+            data = {"text": message}
+            response_user = requests.post(url, json=data, headers=headers)
+            logger.info(f"{Fore.YELLOW}{response_user}{Style.RESET_ALL}")
+            time.sleep(1)
+            logger.info(f"{Fore.MAGENTA}URL:{url} {Fore.CYAN}HEADERS:{headers} {Fore.GREEN}RESPONSE:{response_user} {Fore.YELLOW}MSG:{message}{Style.RESET_ALL}")
+            # return requests.post(
+            #     f"https://api.telegram.org/bot{self.bot_token}/sendMessage",
+            #     json={
+            #         "chat_id": self.chat_id,
+            #         "text": message,
+            #         "parse_mode": "MarkdownV2",
+            #     },
+            #     proxies=self.proxy,
+            #     timeout=10,
+            # )
 
         send_with_retries(_send)
 
@@ -44,31 +59,41 @@ class TelegramNotifier(Notifier):
         def _send():
             # если включен only_text — отправляем без картинки
             if self.only_text:
-                return requests.post(
-                    f"https://api.telegram.org/bot{self.bot_token}/sendMessage",
-                    json={
-                        "chat_id": self.chat_id,
-                        "text": message,
-                        "parse_mode": "MarkdownV2",
-                        "disable_web_page_preview": True,
-                    },
-                    proxies=self.proxy,
-                    timeout=10,
-                )
+                pass
+                # return requests.post(
+                #     f"https://api.telegram.org/bot{self.bot_token}/sendMessage",
+                #     json={
+                #         "chat_id": self.chat_id,
+                #         "text": message,
+                #         "parse_mode": "MarkdownV2",
+                #         "disable_web_page_preview": True,
+                #     },
+                #     proxies=self.proxy,
+                #     timeout=10,
+                # )
 
             # иначе отправляем с фото
-            return requests.post(
-                f"https://api.telegram.org/bot{self.bot_token}/sendPhoto",
-                json={
-                    "chat_id": self.chat_id,
-                    "caption": message,
-                    "photo": get_first_image(ad=ad),
-                    "parse_mode": "MarkdownV2",
-                    "disable_web_page_preview": True,
-                },
-                proxies=self.proxy,
-                timeout=10,
-            )
+            # return requests.post(
+            #     f"https://api.telegram.org/bot{self.bot_token}/sendPhoto",
+            #     json={
+            #         "chat_id": self.chat_id,
+            #         "caption": message,
+            #         "photo": get_first_image(ad=ad),
+            #         "parse_mode": "MarkdownV2",
+            #         "disable_web_page_preview": True,
+            #     },
+            #     proxies=self.proxy,
+            #     timeout=10,
+            # )
+            logger.info(f"{Fore.YELLOW}Notify AD MSG:{message}{Style.RESET_ALL}")
+            url = f"https://platform-api.max.ru/messages?user_id={self.user_id}" # 
+            headers = {'Authorization': self.bot_token, 'Content-Type': 'application/json'}
+            data = {"text": message}
+            response_user = requests.post(url, json=data, headers=headers)
+            logger.info(f"{Fore.YELLOW}{response_user}{Style.RESET_ALL}")
+            time.sleep(1)
+            logger.info(f"{Fore.MAGENTA}URL:{url} {Fore.CYAN}HEADERS:{headers} {Fore.GREEN}RESPONSE:{response_user} {Fore.YELLOW}MSG:{message}{Style.RESET_ALL}")
+
 
         send_with_retries(_send)
 

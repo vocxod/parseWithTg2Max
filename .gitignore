@@ -1,2 +1,9 @@
 # created by virtualenv automatically
 .secret.txt
+*.pyc
+venv
+logs/app.log
+*.pyc
+__pycache__/*.pyc
+integrations/notifications/__pycache__/*.pyc
+.vscode
