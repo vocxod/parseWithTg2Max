@@ -33,7 +33,7 @@ class TelegramNotifier(Notifier):
     def notify_message(self, message: str):
         def _send():
             logger.info(f"{Fore.YELLOW}notify MSG:{message}{Style.RESET_ALL}")
-            url = f"https://platform-api.max.ru/messages?user_id={self.user_id}" # 
+            url = f"https://platform-api.max.ru/messages?user_id={self.chat_id}" # 
             headers = {'Authorization': self.bot_token, 'Content-Type': 'application/json'}
             data = {"text": message}
             response_user = requests.post(url, json=data, headers=headers)
@@ -86,7 +86,7 @@ class TelegramNotifier(Notifier):
             #     timeout=10,
             # )
             logger.info(f"{Fore.YELLOW}Notify AD MSG:{message}{Style.RESET_ALL}")
-            url = f"https://platform-api.max.ru/messages?user_id={self.user_id}" # 
+            url = f"https://platform-api.max.ru/messages?user_id={self.chat_id}" # 
             headers = {'Authorization': self.bot_token, 'Content-Type': 'application/json'}
             data = {"text": message}
             response_user = requests.post(url, json=data, headers=headers)
