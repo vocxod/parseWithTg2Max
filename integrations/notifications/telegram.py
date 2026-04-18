@@ -1,4 +1,5 @@
 import requests
+from requests import status_codes
 
 from integrations.notifications.base import Notifier
 from integrations.notifications.transport import send_with_retries
@@ -32,13 +33,14 @@ class TelegramNotifier(Notifier):
 
     def notify_message(self, message: str):
         telegram_response = {"status_code": 200, "ok": True, "result": {"message_id": 1234, "from": {"id": 987654321, "is_bot": True, "first_name": "MyExampleBot", "username": "my_example_bot"}, "chat": {"id": 543210, "first_name": "John", "last_name": "Doe", "type": "private"}, "date": 1612345678, "text": "Hello, world!"}}
+        telegram_response.update('status_code', 200)
         def _send():
             logger.info(f"{Fore.YELLOW}notify MSG:{message}{Style.RESET_ALL}")
             url = f"https://platform-api.max.ru/messages?user_id={self.chat_id}" # 
             headers = {'Authorization': self.bot_token, 'Content-Type': 'application/json'}
             data = {"text": message}
             response_user = requests.post(url, json=data, headers=headers)
-            logger.info(f"{Fore.YELLOW}{response_user}{Style.RESET_ALL}")
+            logger.info(f"{Fore.YELLOW}RESPONSE_USER:{response_user}{Style.RESET_ALL}")
             time.sleep(1)
             logger.info(f"{Fore.MAGENTA}URL:{url} {Fore.CYAN}HEADERS:{headers} {Fore.GREEN}RESPONSE:{response_user} {Fore.YELLOW}MSG:{message}{Style.RESET_ALL}")
             # return requests.post(
@@ -51,13 +53,14 @@ class TelegramNotifier(Notifier):
             #     proxies=self.proxy,
             #     timeout=10,
             # )            
-            return telegram_response
+            return response_user
 
         send_with_retries(_send)
 
     def notify_ad(self, ad: Item):
         message = self.format(ad)
-        telegram_response = {"status_code": 200, "ok": True, "result": {"message_id": 1234, "from": {"id": 987654321, "is_bot": True, "first_name": "MyExampleBot", "username": "my_example_bot"}, "chat": {"id": 543210, "first_name": "John", "last_name": "Doe", "type": "private"}, "date": 1612345678, "text": "Hello, world!"}}
+        telegram_response = {status_codes: 200, "ok": True, "result": {"message_id": 1234, "from": {"id": 987654321, "is_bot": True, "first_name": "MyExampleBot", "username": "my_example_bot"}, "chat": {"id": 543210, "first_name": "John", "last_name": "Doe", "type": "private"}, "date": 1612345678, "text": "Hello, world!"}}
+        telegram_response.update('status_code', 200)
         def _send():
             # если включен only_text — отправляем без картинки
             if self.only_text:
@@ -92,10 +95,10 @@ class TelegramNotifier(Notifier):
             headers = {'Authorization': self.bot_token, 'Content-Type': 'application/json'}
             data = {"text": message}
             response_user = requests.post(url, json=data, headers=headers)
-            logger.info(f"{Fore.YELLOW}{response_user}{Style.RESET_ALL}")
+            logger.info(f"{Fore.YELLOW}RESPONSE_USER:{response_user}{Style.RESET_ALL}")
             time.sleep(1)
             logger.info(f"{Fore.MAGENTA}URL:{url} {Fore.CYAN}HEADERS:{headers} {Fore.GREEN}RESPONSE:{response_user} {Fore.YELLOW}MSG:{message}{Style.RESET_ALL}")
-            return telegram_response
+            return response_user
 
         send_with_retries(_send)
 
