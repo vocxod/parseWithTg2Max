@@ -4,7 +4,7 @@ tg_chat_id = [8565350, 109794880]
 vk_token = ""
 vk_user_id = []
 urls = [
-    "https://www.avito.ru/sankt-peterburg/oborudovanie_dlya_biznesa/promyshlennoe-ASgBAgICAUTqAv5P?cd=1&f=ASgBAgECAUTqAv5PAUXGmgwdeyJmcm9tIjoxMDAwMDAwLCJ0byI6MjAwMDAwMH0&localPriority=1&q=%D0%B2%D0%B0%D0%BA%D1%83%D1%83%D0%BC%D0%BD%D1%8B%D0%B9+%D0%BD%D0%B0%D1%81%D0%BE%D1%81&s=104",
+    "https://www.avito.ru/sankt-peterburg/business360/oborudovanie_dlya_biznesa/promyshlennoe/nasosy_i_kompressory-ASgBAgICAkTqAv5PlpkT3u~NAw?cd=1&f=ASgBAgECA0TqAv5PlpkT3u~NA7CzFP6hjwMBRcaaDBt7ImZyb20iOjEwMDAwMCwidG8iOjEwMDAwMH0&localPriority=0",
 ]
 count = 5
 keys_word_white_list = []

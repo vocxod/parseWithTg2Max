@@ -7,3 +7,5 @@ logs/app.log
 __pycache__/*.pyc
 integrations/notifications/__pycache__/*.pyc
 .vscode
+result
+database.db
