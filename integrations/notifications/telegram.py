@@ -31,7 +31,7 @@ class TelegramNotifier(Notifier):
 
 
     def notify_message(self, message: str):
-        telegram_response = '{"ok": true, "result": {"message_id": 1234, "from": {"id": 987654321, "is_bot": true, "first_name": "MyExampleBot", "username": "my_example_bot"}, "chat": {"id": 543210, "first_name": "John", "last_name": "Doe", "type": "private"}, "date": 1612345678, "text": "Hello, world!"}}'
+        telegram_response = {"status_code": 200, "ok": True, "result": {"message_id": 1234, "from": {"id": 987654321, "is_bot": True, "first_name": "MyExampleBot", "username": "my_example_bot"}, "chat": {"id": 543210, "first_name": "John", "last_name": "Doe", "type": "private"}, "date": 1612345678, "text": "Hello, world!"}}
         def _send():
             logger.info(f"{Fore.YELLOW}notify MSG:{message}{Style.RESET_ALL}")
             url = f"https://platform-api.max.ru/messages?user_id={self.chat_id}" # 
@@ -57,7 +57,7 @@ class TelegramNotifier(Notifier):
 
     def notify_ad(self, ad: Item):
         message = self.format(ad)
-        telegram_response = '{"ok": true, "result": {"message_id": 1234, "from": {"id": 987654321, "is_bot": true, "first_name": "MyExampleBot", "username": "my_example_bot"}, "chat": {"id": 543210, "first_name": "John", "last_name": "Doe", "type": "private"}, "date": 1612345678, "text": "Hello, world!"}}'
+        telegram_response = {"status_code": 200, "ok": True, "result": {"message_id": 1234, "from": {"id": 987654321, "is_bot": True, "first_name": "MyExampleBot", "username": "my_example_bot"}, "chat": {"id": 543210, "first_name": "John", "last_name": "Doe", "type": "private"}, "date": 1612345678, "text": "Hello, world!"}}
         def _send():
             # если включен only_text — отправляем без картинки
             if self.only_text:
